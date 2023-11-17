@@ -32,6 +32,7 @@ class AuthService:
 
     @staticmethod
     def login_user(email_or_handle: str):
+        """Logs in user"""
         # Match by either email or handle
         user: Users = Users.query.filter(
             (Users.email == email_or_handle) | (Users.handle == email_or_handle)
@@ -45,3 +46,4 @@ class AuthService:
 
         # Log in the user if everything is alright
         login_user(user)
+        return user

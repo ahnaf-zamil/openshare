@@ -1,3 +1,7 @@
+from dotenv import load_dotenv
+
+load_dotenv(".env.testing")
+
 from ..src.app import create_app
 from ..src.lib.ext import db as _db
 
