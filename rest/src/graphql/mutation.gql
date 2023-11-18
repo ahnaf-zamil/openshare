@@ -1,0 +1,16 @@
+input RegisterUserInput {
+  username: String!
+  handle: String!
+  email: String!
+  password: String!
+}
+
+input LoginUserInput {
+  email: String!
+  password: String!
+}
+
+type Mutation {
+  registerUser(input: RegisterUserInput!): User!
+  loginUser(input: LoginUserInput!): User!
+}

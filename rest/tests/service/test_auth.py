@@ -18,7 +18,12 @@ def test_register_user_with_no_conflict(request_context):
     }
 
     with request_context(json=data) as ctx:
-        user = svc.register_user()
+        user = svc.register_user(
+            username=data["username"],
+            handle=data["handle"],
+            password=data["password"],
+            email=data["email"],
+        )
 
     assert user.handle == data["handle"]
     assert user.username == data["username"]
@@ -48,7 +53,12 @@ def test_register_user_with_conflict(request_context):
 
     with pytest.raises(AppException) as exc_info:
         with request_context(json=data):
-            svc.register_user()
+            svc.register_user(
+                username=data["username"],
+                handle=data["handle"],
+                password=data["password"],
+                email=data["email"],
+            )
 
     assert exc_info.value.http_return_code == 409
 
@@ -66,7 +76,7 @@ def test_login_user_success(request_context):
     }
 
     with request_context(json=data) as ctx:
-        user = svc.login_user(data["email"])
+        user = svc.login_user(data["email"], data["password"])
 
     assert ctx.session["_user_id"] == user.id
     assert user.email == data["email"]
@@ -75,7 +85,7 @@ def test_login_user_success(request_context):
     data["email"] = "ahnaf.zamil"
 
     with request_context(json=data) as ctx:
-        user = svc.login_user(data["email"])
+        user = svc.login_user(data["email"], data["password"])
 
     assert ctx.session["_user_id"] == user.id
     assert user.handle == data["email"]
@@ -95,7 +105,7 @@ def test_login_user_failure(request_context):
 
     with pytest.raises(AppException) as exc_info:
         with request_context(json=data):
-            svc.login_user(data["email"])
+            svc.login_user(data["email"], data["password"])
     assert exc_info.value.http_return_code == 401
 
     # 2nd case: User inputs wrong password
@@ -106,5 +116,5 @@ def test_login_user_failure(request_context):
 
     with pytest.raises(AppException) as exc_info:
         with request_context(json=data):
-            svc.login_user(data["email"])
+            svc.login_user(data["email"], data["password"])
     assert exc_info.value.http_return_code == 401
