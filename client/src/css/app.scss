@@ -1,0 +1,52 @@
+// app global css in SCSS form
+
+$container-padding: 20px;
+
+.container,
+.container-sm,
+.container-md,
+.container-lg,
+.container-xl {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@media (min-width: $breakpoint-sm-min) {
+  .container,
+  .container-sm {
+    max-width: $breakpoint-xs - $container-padding;
+  }
+}
+
+@media (min-width: $breakpoint-md-min) {
+  .container,
+  .container-sm,
+  .container-md {
+    max-width: $breakpoint-sm - $container-padding;
+  }
+}
+
+@media (min-width: $breakpoint-lg-min) {
+  .container,
+  .container-sm,
+  .container-md,
+  .container-lg {
+    max-width: $breakpoint-md - $container-padding;
+  }
+}
+
+@media (min-width: $breakpoint-xl-min) {
+  .container,
+  .container-sm,
+  .container-md,
+  .container-lg,
+  .container-xl {
+    max-width: $breakpoint-lg - $container-padding;
+  }
+}
+
+.q-layout {
+  max-height: calc(100vh) !important;
+  min-height: 97vh !important;
+}
