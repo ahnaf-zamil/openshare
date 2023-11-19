@@ -10,7 +10,21 @@ input LoginUserInput {
   password: String!
 }
 
+input CreatePostInput {
+  caption: String!
+}
+
+input UpdatePostInput {
+  post_id: ID!
+  caption: String!
+}
+
 type Mutation {
   registerUser(input: RegisterUserInput!): User!
   loginUser(input: LoginUserInput!): User!
+
+  createPost(input: CreatePostInput!): Post!
+  updatePost(input: UpdatePostInput!): Post!
+  deletePost(post_id: ID!): Boolean!
+  likePost(post_id: ID!): Boolean!
 }

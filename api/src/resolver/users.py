@@ -10,7 +10,7 @@ group = ResolverGroup(MutationType, QueryType)
 
 @group.field("getCurrentUser", QueryType)
 @login_required
-def getCurrentUser(_, info: GraphQLResolveInfo):
+def get_current_user(_, info: GraphQLResolveInfo):
     return current_user.json()
 
 
@@ -38,7 +38,7 @@ def getCurrentUser(_, info: GraphQLResolveInfo):
         "required": ["email", "password"],
     }
 )
-def registerUser(_, info: GraphQLResolveInfo, **kwargs):
+def register_user(_, info: GraphQLResolveInfo, **kwargs):
     data = kwargs["input"]
     new_user = AuthService.register_user(**data)
     return new_user.json()
@@ -55,7 +55,7 @@ def registerUser(_, info: GraphQLResolveInfo, **kwargs):
         "required": ["email", "password"],
     }
 )
-def loginUser(_, info: GraphQLResolveInfo, **kwargs):
+def login_user(_, info: GraphQLResolveInfo, **kwargs):
     data = kwargs["input"]
     existing_user = AuthService.login_user(**data)
     return existing_user.json()

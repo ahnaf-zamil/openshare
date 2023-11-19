@@ -5,3 +5,10 @@ type User {
   email: String!
   created_at: Int!
 }
+
+type Post {
+  id: ID!
+  caption: String!
+  user_id: String!
+  created_at: Int!
+}

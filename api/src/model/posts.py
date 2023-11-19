@@ -11,14 +11,19 @@ class Posts(db.Model):
     __tablename__ = "posts"
 
     id = db.Column(db.String(32), primary_key=True, default=lambda: uuid4().hex)
-    caption = db.Column(db.String(2000), unique=True, nullable=False)
+    caption = db.Column(db.String(2000), nullable=False)
     created_at = db.Column(db.Integer, default=lambda: int(time.time()), nullable=False)
 
     # ID of the user who created the post
     user_id = db.Column(db.String(32), nullable=False)
 
     def json(self):
-        return {"id": self.id, "caption": self.caption, "created_at": self.created_at}
+        return {
+            "id": self.id,
+            "caption": self.caption,
+            "created_at": self.created_at,
+            "user_id": self.user_id,
+        }
 
 
 class PostMedia(db.Model):

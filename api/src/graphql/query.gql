@@ -1,3 +1,5 @@
 type Query {
   getCurrentUser: User!
+
+  getPost(post_id: ID!): Post!
 }

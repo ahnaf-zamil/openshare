@@ -1,10 +1,19 @@
 from flask_login import current_user
+from typing import Optional
 from ..exceptions import AppException
 from ..model import Posts, Likes
 from ..lib.ext import db
 
 
 class PostService:
+    @staticmethod
+    def get_post(post_id: str) -> Optional[Posts]:
+        """Fetches post from DB"""
+        post = Posts.query.filter_by(id=post_id).first()
+        if not post:
+            raise AppException(http_return_code=404, msg="Post not found")
+        return post
+
     @staticmethod
     def create_post(caption: str) -> Posts:
         """Creates a new post"""
@@ -30,10 +39,13 @@ class PostService:
     @staticmethod
     def delete_post(post_id: str) -> None:
         """Deletes a post"""
-        post = Posts.query.filter_by(id=post_id).first()
+        post: Optional[Posts] = Posts.query.filter_by(id=post_id).first()
 
         if not post:
             raise AppException(404, "Post not found")
+
+        if post.user_id != current_user.id:
+            raise AppException(403, "You are not the post owner")
 
         db.session.delete(post)
         return db.session.commit()
